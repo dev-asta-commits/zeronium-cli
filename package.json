@@ -1,5 +1,5 @@
 {
-    "name": "zeroniumcli",
+    "name": "zeronium-cli",
     "bin": {
         "zero": "./src/index.ts"
     },
