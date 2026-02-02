@@ -1,0 +1,14 @@
+#!/usr/bin/env bun
+
+console.log("hello world");
+
+import { Command } from "commander";
+
+const program = new Command();
+
+program
+    .name("my-cli")
+    .description("A CLI application built with Commander.js")
+    .version("1.0.0");
+
+program.parse();
