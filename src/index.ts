@@ -3,19 +3,18 @@
 import { Command } from "commander";
 const program = new Command();
 
+// command imports
+import { init } from "./core/commands";
+
 program
     .name("zeronium-cli")
     .description("A CLI project manager")
-    .version(process.env.VERSION!);
+    .version(
+        process.env.VERSION!,
+        "-v, --version",
+        "output the current version",
+    );
 
-program
-    .command("init")
-    .description("Initializes a new project in the current directory")
-    .argument("<string>", "Name of the project")
-    .option("-t --tag", "A list of tags")
-    .action((str, options) => {
-        console.log("Created a project with the name : ", str.split(" ")[0]);
-        if (options.tag) console.log("with the followin tags : ", options.tag);
-    });
+init(program);
 
 program.parse();
