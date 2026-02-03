@@ -1,11 +1,13 @@
 import { $ } from "bun";
 import { createDir, removeDir } from "../utils/shell.utils";
-import { dbCreateProject, dbListProjects } from "../utils/db.utils";
+import {
+    dbCreateProject,
+    dbListProjects,
+    dbNukeProjects,
+} from "../utils/db.utils";
 
 // type imports
 import type { projectOptions } from "../types/types";
-
-// database imports
 
 export const initController = async (str: string, options: projectOptions) => {
     try {
@@ -41,7 +43,7 @@ export const createController = (str: string, options: projectOptions) => {
         if (options.cat) console.log("\n category :", options.cat);
         console.log("\n status :", options.status);
     } catch (err) {
-        console.log("Error occured in initController", err);
+        console.log("Error occured in createController", err);
     }
 };
 
@@ -50,23 +52,65 @@ export const removeController = (str: string) => {
         removeDir(str);
 
         // @ts-expect-error -- random ts error ig??
-        console.log("\n Removed a project with the name : ", str.split()[0]);
+        console.log("\nRemoved a project with the name : ", str.split()[0]);
     } catch (err) {
         console.log("Error in removeController", err);
+    }
+};
+
+export const nukeController = () => {
+    try {
+        dbNukeProjects();
+        console.log("Successfully removed all projects from the registry");
+    } catch (err) {
+        console.log("Error in nukeController", err);
     }
 };
 
 export const projectsController = async (str: string) => {
     try {
         const result = await dbListProjects(str);
-        if (!result) {
+        if (result?.length == 0) {
             console.log("No projects found in the registry...");
+        } else {
+            console.log("");
+            if (str) {
+                // @ts-expect-error -- typscript just isn't smart enough man...
+                const { project_name, tags, category, status, project_path } = [
+                    result,
+                ];
+                console.log(
+                    "Name :",
+                    project_name,
+                    "\ntags :",
+                    tags,
+                    "\ncategory :",
+                    category,
+                    "\nstatus :",
+                    status,
+                    "\nlocation",
+                    project_path,
+                );
+            } else {
+                result!.map((project) => {
+                    console.log(
+                        // @ts-expect-error
+                        project.projectname,
+                        "   ",
+                        `(${project.status})`,
+                    );
+                });
+            }
         }
-        console.log("");
-        result!.map((project) => {
-            console.log(project.projectname);
-        });
     } catch (err) {
         console.log("Error occured in listProjects cotroller", err);
+    }
+};
+
+export const jumpController = async (str: string) => {
+    try {
+        // todo...
+    } catch (err) {
+        console.log("Error in jumpController", err);
     }
 };

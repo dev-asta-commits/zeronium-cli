@@ -1,4 +1,4 @@
-import type { Command } from "commander";
+import { program, type Command } from "commander";
 
 import { projectOptions } from "./options";
 
@@ -7,6 +7,8 @@ import {
     projectsController,
     createController,
     removeController,
+    nukeController,
+    jumpController,
 } from "../controllers/projects.controller";
 
 export const init = (program: Command) => {
@@ -37,6 +39,13 @@ export const remove = (program: Command) => {
         .action(removeController);
 };
 
+export const nuke = (program: Command) => {
+    const nuke = program
+        .command("nuke")
+        .description("Nuke all the projects from the registry.")
+        .action(nukeController);
+};
+
 export const projects = (program: Command) => {
     const projects = program
         .command("projects")
@@ -45,4 +54,12 @@ export const projects = (program: Command) => {
         .action(projectsController);
 
     projectOptions(projects);
+};
+
+export const jump = (program: Command) => {
+    const jump = program
+        .command("jump")
+        .description("Jump to a secific project directory")
+        .argument("<name>", "Name of the project")
+        .action(jumpController);
 };
