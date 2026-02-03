@@ -1,7 +1,12 @@
+import { $ } from "bun";
+import { createDir, listProjects } from "../utils/projects.controller.utils";
+
+// type imports
+import type { initOptions } from "../types/types";
+
 // database implementation to be added
 
-// @ts-expect-error -- options should be a json object but yeahhh
-export const initController = (str: string, options) => {
+export const initController = (str: string, options: initOptions) => {
     try {
         // @ts-expect-error -- idk some random ts error ig??
         console.log("\nCreated a project with the name : ", str.split()[0]);
@@ -17,3 +22,13 @@ export const initController = (str: string, options) => {
         console.log("Error occured in initController", err);
     }
 };
+
+export const projectsController = () => {
+    try {
+        listProjects();
+    } catch (err) {
+        console.log("Error occured in listProjects cotroller", err);
+    }
+};
+
+export const createController = () => {};

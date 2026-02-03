@@ -1,13 +1,12 @@
 #!/usr/bin/env bun
 
 import { Command } from "commander";
-const program = new Command();
+const zero = new Command();
 
 // command imports
-import { init } from "./core/commands";
+import { create, init, projects } from "./core/commands";
 
-program
-    .name("zeronium-cli")
+zero.name("zeronium-cli")
     .description("A CLI project manager")
     .version(
         process.env.VERSION!,
@@ -15,6 +14,8 @@ program
         "output the current version",
     );
 
-init(program);
+init(zero);
+create(zero);
+projects(zero);
 
-program.parse();
+zero.parse();
