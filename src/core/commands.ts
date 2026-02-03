@@ -1,40 +1,48 @@
 import type { Command } from "commander";
+
+import { projectOptions } from "./options";
+
 import {
     initController,
     projectsController,
     createController,
+    removeController,
 } from "../controllers/projects.controller";
 
 export const init = (program: Command) => {
-    program
+    const init = program
         .command("init")
         .description("Initializes a new project in the current directory")
         .argument("<name>", "Name of the project")
-        .option("-t --tag <tagnames...>", "A list of tags")
-        .option("-c --cat <category>", "Category of the project")
-        .option("-s --status <status>", "Status of the project", "incomplete")
         .action(initController);
+
+    projectOptions(init);
 };
 
 export const create = (program: Command) => {
-    program
+    const create = program
         .command("create")
         .description("Initializes a new project in the current directory")
         .argument("<name>", "Name of the project")
-        .option("-t --tag <tagnames...>", "A list of tags")
-        .option("-c --cat <category>", "Category of the project")
-        .option("-s --status <status>", "Status of the project", "incomplete")
         .action(createController);
+
+    projectOptions(create);
+};
+
+export const remove = (program: Command) => {
+    const remove = program
+        .command("remove")
+        .description("Removes an existing project")
+        .argument("<name>", "Name of the project")
+        .action(removeController);
 };
 
 export const projects = (program: Command) => {
-    program
+    const projects = program
         .command("projects")
-        .description(
-            "jumps to the main project directory and list downs all the projects",
-        )
-        .option("-t --tag <tagnames...>", "A list of tags")
-        .option("-c --cat <category>", "Category of the project")
-        .option("-s --status <status>", "Status of the project", "incomplete")
+        .argument("[name]", "Name of the project")
+        .description("List all available projects in the registry")
         .action(projectsController);
+
+    projectOptions(projects);
 };

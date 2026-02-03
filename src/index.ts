@@ -1,10 +1,10 @@
 #!/usr/bin/env bun
 
 import { Command } from "commander";
-const zero = new Command();
+export const zero = new Command();
 
 // command imports
-import { create, init, projects } from "./core/commands";
+import { create, init, projects, remove } from "./core/commands";
 
 zero.name("zeronium-cli")
     .description("A CLI project manager")
@@ -16,6 +16,7 @@ zero.name("zeronium-cli")
 
 init(zero);
 create(zero);
+remove(zero);
 projects(zero);
 
 zero.parse();

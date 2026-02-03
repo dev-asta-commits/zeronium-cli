@@ -7,15 +7,20 @@
     "type": "module",
     "private": true,
     "scripts": {
-        "dev": "bun run src/index.ts"
+        "dev": "bun run src/index.ts",
+        "db:generate": "bunx drizzle-kit generate",
+        "db:migrate": "bunx drizzle-kit migrate",
+        "db:push": "bunx drizzle-kit push"
     },
     "devDependencies": {
-        "@types/bun": "latest"
+        "@types/bun": "latest",
+        "drizzle-kit": "^0.31.8"
     },
     "peerDependencies": {
-        "typescript": "^5"
+        "typescript": "^5.9.3"
     },
     "dependencies": {
-        "commander": "^14.0.3"
+        "commander": "^14.0.3",
+        "drizzle-orm": "^0.45.1"
     }
 }
