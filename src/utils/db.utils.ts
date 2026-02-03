@@ -1,22 +1,22 @@
 import { eq } from "drizzle-orm";
-import { db } from "../db/connection";
-import { projects } from "../db/schema/project.schema";
+import { db } from "@/db/connection";
+import { projects } from "@/db/schema/project.schema";
 
 // type imports
-import type { projectData, projectOptions } from "../types/types";
+import type { projectData, projectOptions } from "@/types/types";
 
-import { getPath } from "./shell.utils";
+import { getPath } from "@/utils/shell.utils";
 
-export const dbCreateProject = async (str: string, options: projectOptions) => {
-    // let serialisedList = {}
-
-    // for (let i = 0; i < options.tag.length; i++) {
-    //     serialisedList = {...options.tag[i]}
-    // }
-
-    // todo: serialize the tags and store it.
-
+export const dbInitProject = async (str: string, options: projectOptions) => {
     try {
+        let tags = {};
+        if (options.tag) {
+            options.tag.forEach((tag, i) => {
+                // @ts-expect-error
+                tags[i + 1] = tag;
+            });
+        }
+
         let path: string;
         if (!options.path) {
             path = await getPath();
@@ -28,16 +28,47 @@ export const dbCreateProject = async (str: string, options: projectOptions) => {
             // @ts-expect-error
             project_name: str.split()[0],
             // todo: implement multiple tags handling
+            tags,
             category: options.cat,
             status: options.status,
             project_path: path!,
         };
 
         const insertedProject = await db.insert(projects).values(projectData);
-
-        console.log("Project added to database : ", insertedProject);
     } catch (err) {
         console.log("Error in dbCreateProject function", err);
+        process.exit();
+    }
+};
+
+export const dbCreateProject = async (
+    str: string,
+    options: projectOptions,
+    path: string,
+) => {
+    try {
+        let tags = {};
+        if (options.tag) {
+            options.tag.forEach((tag, i) => {
+                // @ts-expect-error
+                tags[i + 1] = tag;
+            });
+        }
+
+        const projectData: projectData = {
+            // @ts-expect-error
+            project_name: str.split()[0],
+            // todo: implement multiple tags handling
+            tags,
+            category: options.cat,
+            status: options.status,
+            project_path: path,
+        };
+
+        const insertedProject = await db.insert(projects).values(projectData);
+    } catch (err) {
+        console.log("Error in dbCreateProject function", err);
+        process.exit();
     }
 };
 
@@ -69,7 +100,7 @@ export const dbListProjects = async (str?: string) => {
         return result;
     } catch (err) {
         console.log("Error while querying the database to list projects", err);
-        return [];
+        process.exit();
     }
 };
 

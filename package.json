@@ -1,7 +1,8 @@
 {
     "name": "zeronium-cli",
     "bin": {
-        "zero": "./src/index.ts"
+        "zero": "./src/index.ts",
+        "zeronium-cli": "./src/index.ts"
     },
     "module": "index.ts",
     "type": "module",

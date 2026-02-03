@@ -3,6 +3,8 @@ import { $ } from "bun";
 export const createDir = async (dirName: string) => {
     try {
         await $`mkdir ${dirName}`;
+        const path = await $`cd ${dirName} ; pwd`.text();
+        return path;
     } catch (err) {
         console.log("Error while creating a directory.", err);
     }

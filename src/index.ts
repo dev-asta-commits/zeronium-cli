@@ -4,7 +4,7 @@ import { Command } from "commander";
 export const zero = new Command();
 
 // command imports
-import { create, init, projects, remove, nuke } from "./core/commands";
+import { create, init, projects, remove, nuke } from "@/core/commands";
 
 zero.name("zeronium-cli")
     .description("A CLI project manager")

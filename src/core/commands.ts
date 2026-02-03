@@ -1,6 +1,6 @@
 import { program, type Command } from "commander";
 
-import { projectOptions } from "./options";
+import { projectOptions } from "@/core/options";
 
 import {
     initController,
@@ -9,7 +9,7 @@ import {
     removeController,
     nukeController,
     jumpController,
-} from "../controllers/projects.controller";
+} from "@/controllers/projects.controller";
 
 export const init = (program: Command) => {
     const init = program

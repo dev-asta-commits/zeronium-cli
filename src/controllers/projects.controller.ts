@@ -1,17 +1,18 @@
 import { $ } from "bun";
-import { createDir, removeDir } from "../utils/shell.utils";
+import { createDir, removeDir } from "@/utils/shell.utils";
 import {
+    dbInitProject,
     dbCreateProject,
     dbListProjects,
     dbNukeProjects,
-} from "../utils/db.utils";
+} from "@/utils/db.utils";
 
 // type imports
-import type { projectOptions } from "../types/types";
+import type { projectOptions } from "@/types/types";
 
 export const initController = async (str: string, options: projectOptions) => {
     try {
-        await dbCreateProject(str, options);
+        await dbInitProject(str, options);
 
         // @ts-expect-error -- idk some random ts error ig??
         console.log("\nCreated a project with the name : ", str.split()[0]);
@@ -25,12 +26,17 @@ export const initController = async (str: string, options: projectOptions) => {
         console.log("\n status :", options.status);
     } catch (err) {
         console.log("Error occured in initController", err);
+        process.exit();
     }
 };
 
-export const createController = (str: string, options: projectOptions) => {
+export const createController = async (
+    str: string,
+    options: projectOptions,
+) => {
     try {
-        createDir(str);
+        const path = await createDir(str);
+        await dbCreateProject(str, options, path!);
 
         // @ts-expect-error -- idk some random ts error ig??
         console.log("\nCreated a project with the name : ", str.split()[0]);
@@ -44,6 +50,7 @@ export const createController = (str: string, options: projectOptions) => {
         console.log("\n status :", options.status);
     } catch (err) {
         console.log("Error occured in createController", err);
+        process.exit();
     }
 };
 
@@ -72,25 +79,27 @@ export const projectsController = async (str: string) => {
         const result = await dbListProjects(str);
         if (result?.length == 0) {
             console.log("No projects found in the registry...");
+            process.exit();
         } else {
             console.log("");
             if (str) {
-                // @ts-expect-error -- typscript just isn't smart enough man...
-                const { project_name, tags, category, status, project_path } = [
-                    result,
-                ];
+                const [project] = result;
+
+                // project.tag
+                // @ts-expect-error -- idk man
+                const { project_name, tags, category, status, project_path } =
+                    project;
+
+                const tagNames = tags ? Object.values(tags).join(", ") : "none";
+
                 console.log(
-                    "Name :",
-                    project_name,
-                    "\ntags :",
-                    tags,
-                    "\ncategory :",
-                    category,
-                    "\nstatus :",
-                    status,
-                    "\nlocation",
-                    project_path,
+                    `Name     : ${project_name}`,
+                    `\ntags     : ${tagNames}`, // tags is often an object/array
+                    `\ncategory : ${category}`,
+                    `\nstatus   : ${status}`,
+                    `\nlocation : ${project_path}`,
                 );
+                process.exit();
             } else {
                 result!.map((project) => {
                     console.log(
@@ -100,10 +109,12 @@ export const projectsController = async (str: string) => {
                         `(${project.status})`,
                     );
                 });
+                process.exit();
             }
         }
     } catch (err) {
         console.log("Error occured in listProjects cotroller", err);
+        process.exit();
     }
 };
 
