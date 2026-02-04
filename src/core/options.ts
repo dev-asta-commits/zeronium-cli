@@ -7,3 +7,7 @@ export const projectOptions = (command: Command) => {
         .option("-s --status <status>", "Status of the project", "incomplete")
         .option("-p --path <path>", "Path of the project directory");
 };
+
+export const jumpOptions = (command: Command) => {
+    command.option("-r --recent", "Jump to the most recent project.", false);
+};

@@ -5,6 +5,10 @@ export type projectOptions = {
     path: string;
 };
 
+export type jumpOptions = {
+    recent?: boolean;
+};
+
 export type projectData = {
     project_name: string;
     tags?: {};

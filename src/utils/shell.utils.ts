@@ -23,7 +23,20 @@ export const getPath = async () => {
         const path = await $`pwd`.text();
         return path;
     } catch (err) {
-        console.log("Error while tryin to get current directory's path", err);
+        console.log("Error while trying to get current directory's path", err);
         return "";
+    }
+};
+
+export const jumpToDir = async (path: string) => {
+    try {
+        process.stdout.write(path.trim());
+        process.exit(0);
+    } catch (err) {
+        console.log("Error while moving to directory");
+        console.log(
+            "Make sure to configure your shell before using this command",
+        );
+        process.exit();
     }
 };

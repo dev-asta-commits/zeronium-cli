@@ -1,4 +1,5 @@
 import { eq } from "drizzle-orm";
+
 import { db } from "@/db/connection";
 import { projects } from "@/db/schema/project.schema";
 
@@ -25,8 +26,7 @@ export const dbInitProject = async (str: string, options: projectOptions) => {
         }
 
         const projectData: projectData = {
-            // @ts-expect-error
-            project_name: str.split()[0],
+            project_name: str,
             // todo: implement multiple tags handling
             tags,
             category: options.cat,
@@ -56,8 +56,7 @@ export const dbCreateProject = async (
         }
 
         const projectData: projectData = {
-            // @ts-expect-error
-            project_name: str.split()[0],
+            project_name: str,
             // todo: implement multiple tags handling
             tags,
             category: options.cat,
@@ -69,6 +68,32 @@ export const dbCreateProject = async (
     } catch (err) {
         console.log("Error in dbCreateProject function", err);
         process.exit();
+    }
+};
+
+export const dbRemoveProject = async (str: string, options: projectOptions) => {
+    try {
+        const project_name = str;
+        const { tag, cat, status, path } = options;
+
+        if (project_name) {
+            const [removed] = await db
+                .delete(projects)
+                .where(eq(projects.project_name, project_name))
+                .returning();
+
+            if (removed) {
+                console.log(
+                    "Removed the following project from registry : \n",
+                    project_name,
+                );
+                process.exit();
+            }
+
+            console.log("Project doesn't exist...");
+        }
+    } catch (err) {
+        console.log("Error in dbRemoveProject", err);
     }
 };
 
@@ -84,8 +109,8 @@ export const dbListProjects = async (str?: string) => {
                     project_path: projects.project_path,
                 })
                 .from(projects)
-                // @ts-expect-error
-                .where(eq(projects.project_name, str.split()[0]));
+
+                .where(eq(projects.project_name, str));
 
             return result;
         }

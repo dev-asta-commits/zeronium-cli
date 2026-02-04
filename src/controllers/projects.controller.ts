@@ -1,10 +1,10 @@
-import { $ } from "bun";
 import { createDir, removeDir } from "@/utils/shell.utils";
 import {
     dbInitProject,
     dbCreateProject,
     dbListProjects,
     dbNukeProjects,
+    dbRemoveProject,
 } from "@/utils/db.utils";
 
 // type imports
@@ -14,8 +14,7 @@ export const initController = async (str: string, options: projectOptions) => {
     try {
         await dbInitProject(str, options);
 
-        // @ts-expect-error -- idk some random ts error ig??
-        console.log("\nCreated a project with the name : ", str.split()[0]);
+        console.log("\nCreated a project with the name : ", str);
         if (options.tag) {
             console.log("\n tags : ");
             for (let i = 0; i < options.tag.length; i++) {
@@ -38,8 +37,7 @@ export const createController = async (
         const path = await createDir(str);
         await dbCreateProject(str, options, path!);
 
-        // @ts-expect-error -- idk some random ts error ig??
-        console.log("\nCreated a project with the name : ", str.split()[0]);
+        console.log("\nCreated a project with the name : ", str);
         if (options.tag) {
             console.log("\n tags : ");
             for (let i = 0; i < options.tag.length; i++) {
@@ -54,14 +52,16 @@ export const createController = async (
     }
 };
 
-export const removeController = (str: string) => {
+export const removeController = async (
+    str: string,
+    options: projectOptions,
+) => {
     try {
-        removeDir(str);
-
-        // @ts-expect-error -- random ts error ig??
-        console.log("\nRemoved a project with the name : ", str.split()[0]);
+        await dbRemoveProject(str, options);
+        // removeDir(str);
     } catch (err) {
         console.log("Error in removeController", err);
+        process.exit();
     }
 };
 
@@ -71,6 +71,7 @@ export const nukeController = () => {
         console.log("Successfully removed all projects from the registry");
     } catch (err) {
         console.log("Error in nukeController", err);
+        process.exit();
     }
 };
 
@@ -115,13 +116,5 @@ export const projectsController = async (str: string) => {
     } catch (err) {
         console.log("Error occured in listProjects cotroller", err);
         process.exit();
-    }
-};
-
-export const jumpController = async (str: string) => {
-    try {
-        // todo...
-    } catch (err) {
-        console.log("Error in jumpController", err);
     }
 };

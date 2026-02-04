@@ -1,17 +1,21 @@
 {
     "name": "zeronium-cli",
+    "version": "0.1.0",
+    "description": "A CLI tool for managing all your development projects",
+    "license": "MIT",
     "bin": {
-        "zero": "./src/index.ts",
-        "zeronium-cli": "./src/index.ts"
+        "zero": "src/index.ts",
+        "zeronium-cli": "src/index.ts"
     },
     "module": "index.ts",
     "type": "module",
-    "private": true,
+    "private": false,
     "scripts": {
         "dev": "bun run src/index.ts",
         "db:generate": "bunx drizzle-kit generate",
         "db:migrate": "bunx drizzle-kit migrate",
-        "db:push": "bunx drizzle-kit push"
+        "db:push": "bunx drizzle-kit push",
+        "postinstall": "node scripts/jump-function-setup.js"
     },
     "devDependencies": {
         "@types/bun": "latest",

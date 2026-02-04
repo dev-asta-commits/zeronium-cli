@@ -1,6 +1,6 @@
 import { program, type Command } from "commander";
 
-import { projectOptions } from "@/core/options";
+import { jumpOptions, projectOptions } from "@/core/options";
 
 import {
     initController,
@@ -8,8 +8,9 @@ import {
     createController,
     removeController,
     nukeController,
-    jumpController,
 } from "@/controllers/projects.controller";
+
+import { jumpController } from "@/controllers/navigation.controller";
 
 export const init = (program: Command) => {
     const init = program
@@ -37,6 +38,8 @@ export const remove = (program: Command) => {
         .description("Removes an existing project")
         .argument("<name>", "Name of the project")
         .action(removeController);
+
+    projectOptions(remove);
 };
 
 export const nuke = (program: Command) => {
@@ -60,6 +63,8 @@ export const jump = (program: Command) => {
     const jump = program
         .command("jump")
         .description("Jump to a secific project directory")
-        .argument("<name>", "Name of the project")
+        .argument("[name]", "Name of the project")
         .action(jumpController);
+
+    jumpOptions(jump);
 };
