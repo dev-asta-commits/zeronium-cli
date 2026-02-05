@@ -27,5 +27,11 @@
     "dependencies": {
         "commander": "^14.0.3",
         "drizzle-orm": "^0.45.1"
+    },
+    "optionalDependencies": {
+        "@zeronium/linux-x64": "1.0.0",
+        "@zeronium/windows-x64": "1.0.0",
+        "@zeronium/darwin-arm64": "1.0.0",
+        "@zeronium/darwin-x64": "1.0.0"
     }
 }

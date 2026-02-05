@@ -1,4 +1,4 @@
-# example
+# example usage
 ```sh
 ❯ zero projects
 
@@ -82,30 +82,46 @@ Immutable backups.
 
 ### Installation
 
-1. Zeronium depends on the bun runtime. So, make sure to have it installed globally.
+#### install using npm :
 
-You can install bun usin npm :
+#### linux 
+
+for linux-x64 :
 
 ```sh
-npm install -g bun
+sudo npm i -g @zeronium/zeronium-cli-lin-x64
 ```
 
-Check their documentation for other options : https://bun.com/docs/installation
-
-2. Install zeronium-cli
+for linux-arm64 :
 
 ```sh
-npm install -g zeronium-cli
+sudo npm i @zeronium/zeronium-cli-lin-arm64
+```
+#### windows 
+
+for windows-x64 :
+
+```sh
+sudo npm i @zeronium/zeronium-cli-win-x64
 ```
 
-3. Make sure to say yes when you see this prompt since the jump command won't work if you don't.
+#### macOS
+
+for macOS-x64 :
 
 ```sh
-Add 'zero jump' to your shell profile? (y/n): 
+sudo npm i @zeronium/zeronium-cli-darwin-x64
+```
+
+for mcOS-arm64 :
+
+```sh
+sudo npm i @zeronium/zeronium-cli-darwin-arm64
 ```
 
 
 ### Commands 
+
 type `zero` in terminal for help
 
 #### `init`
@@ -116,23 +132,31 @@ Used to the current directory as a project and register it.
 
 Used to create a new directory in the current directory and initialize it as a project
 
-#### `destroy`
+#### `remove`
 
-Used to de-initialize a directory as a project and remove it from the registry.
+Used to remove a project from the registry.
 
-#### `find`
+#### `projects`
 
+Used to list all or specific available projects in registry. refer to the help command for more info.
+
+#### `nuke`
+
+Used to remove all projects from the registry
+
+#### `find` (tba)
 Used to fuzzy-find a project.
 
 ### Flags
+
 #### `--tag`
 
-Used to assign a tag
+Used to assign or specify a tag
 
 #### `--cat`
 
-Used to assign a category
+Used to assign or specify a category
 
 #### `--status`
 
-Used to define the status of the project. By default, the status is set to incomplete
+Used to define the status of the project when initilizing. By default, the status is set to incomplete
