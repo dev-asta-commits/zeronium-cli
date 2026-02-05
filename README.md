@@ -95,14 +95,14 @@ sudo npm i -g @zeronium/zeronium-cli-lin-x64
 for linux-arm64 :
 
 ```sh
-sudo npm i @zeronium/zeronium-cli-lin-arm64
+sudo npm i -g @zeronium/zeronium-cli-lin-arm64
 ```
 #### windows 
 
 for windows-x64 :
 
 ```sh
-sudo npm i @zeronium/zeronium-cli-win-x64
+npm i -g @zeronium/zeronium-cli-win-x64
 ```
 
 #### macOS
@@ -110,13 +110,13 @@ sudo npm i @zeronium/zeronium-cli-win-x64
 for macOS-x64 :
 
 ```sh
-sudo npm i @zeronium/zeronium-cli-darwin-x64
+sudo npm i -g @zeronium/zeronium-cli-darwin-x64
 ```
 
 for mcOS-arm64 :
 
 ```sh
-sudo npm i @zeronium/zeronium-cli-darwin-arm64
+sudo npm i -g @zeronium/zeronium-cli-darwin-arm64
 ```
 
 
