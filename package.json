@@ -1,10 +1,10 @@
 {
     "name": "zeronium-cli",
-    "version": "0.1.0",
+    "version": "0.2.8",
     "description": "A CLI tool for managing all your development projects",
     "license": "MIT",
     "bin": {
-        "zero": "src/index.ts",
+        "zero-dev": "src/index.ts",
         "zeronium-cli": "src/index.ts"
     },
     "module": "index.ts",
@@ -15,7 +15,7 @@
         "db:generate": "bunx drizzle-kit generate",
         "db:migrate": "bunx drizzle-kit migrate",
         "db:push": "bunx drizzle-kit push",
-        "postinstall": "node scripts/jump-function-setup.js"
+        "postinstall": "echo 'Runnin postinstall script' && node scripts/jump-function-setup.js"
     },
     "devDependencies": {
         "@types/bun": "latest",
@@ -29,9 +29,9 @@
         "drizzle-orm": "^0.45.1"
     },
     "optionalDependencies": {
-        "@zeronium/linux-x64": "1.0.0",
-        "@zeronium/windows-x64": "1.0.0",
-        "@zeronium/darwin-arm64": "1.0.0",
-        "@zeronium/darwin-x64": "1.0.0"
+        "@zeronium/zeronium-cli-darwin-arm64": "0.2.7",
+        "@zeronium/zeronium-cli-darwin-x64": "0.2.7",
+        "@zeronium/zeronium-cli-lin-x64": "0.2.7",
+        "@zeronium/zeronium-cli-win-x64": "0.2.7"
     }
 }
